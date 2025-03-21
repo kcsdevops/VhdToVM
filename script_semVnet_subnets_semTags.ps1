@@ -22,9 +22,19 @@ $adminUsername = "adminuser"
 $adminPassword = "SenhaSegura123!"
 $vnetName = "MinhaVNet"
 $subnetName = "MinhaSubnet"
-$ipConfigName = "MinhaIPConfig"
 $nicName = "MinhaNIC"
 $privateIpAddress = "10.0.0.4"
+$diskSizeGB = 2560 # 2.5 TB in GB
+$tags = @{
+    "Environment" = "Production"
+    "Department" = "IT"
+    "Project" = "Migration"
+    "Owner" = "Admin"
+    "CostCenter" = "12345"
+    "Application" = "WebApp"
+    "Compliance" = "Yes"
+    "Backup" = "Enabled"
+}
 
 # Crie um grupo de recursos
 New-AzResourceGroup -Name $resourceGroupName -Location $location
