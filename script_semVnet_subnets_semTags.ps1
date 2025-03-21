@@ -1,27 +1,14 @@
 #Vamos instalar e importar o módulo Azure PowerShell antes de tentar novamente.
-
 #Instale o módulo Azure PowerShell:
 #Abra o PowerShell como administrador e execute o seguinte comando para instalar o módulo:
-
 Install-Module -Name Az -AllowClobber -Scope CurrentUser
 
 #Importe o módulo Azure PowerShell: #Depois de instalar o módulo, importe-o:
-
 Import-Module Az
 
 #Autentique-se no Azure: #Agora, você deve ser capaz de se autenticar no Azure:
-
 Connect-AzAccount
-
-
 #Começa agora o show da xuxa!
-
-# Autentique-se no Azure
-Connect-AzAccount
-
-# Defina as variáveis necessárias
-# Autentique-se no Azure
-Connect-AzAccount
 
 # Defina as variáveis necessárias
 $resourceGroupName = "MeuGrupoDeRecursos"
