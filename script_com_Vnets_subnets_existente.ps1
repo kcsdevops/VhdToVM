@@ -15,6 +15,7 @@ $vnetName = "MinhaVNet"
 $subnetName = "MinhaSubnet"
 $nicName = "MinhaNIC"
 $privateIpAddress = "10.0.0.4"
+$diskSizeGB = 2560 # 2.5 TB in GB
 $tags = @{
     "Environment" = "Production"
     "Department" = "IT"
