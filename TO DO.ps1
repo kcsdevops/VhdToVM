@@ -85,34 +85,3 @@ New-AzVM -ResourceGroupName $resourceGroupName -Location $location -VM $vmConfig
 # Destrua o contêiner de blob
 Remove-AzStorageContainer -Name $storageContainerName -Context $context
 
-# Crie um grupo de recursos
-New-AzResourceGroup -Name $resourceGroupName -Location $location
-
-# Crie uma conta de armazenamento
-New-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccountName -Location $location -SkuName "Standard_LRS"
-
-# Obtenha a chave de acesso da conta de armazenamento
-$storageAccountKey = (Get-AzStorageAccountKey -ResourceGroupName $resourceGroupName -Name $storageAccountName).Value[0]
-$context = New-AzStorageContext -StorageAccountName $storageAccountName -StorageAccountKey $storageAccountKey
-
-# Crie um contêiner de armazenamento
-New-AzStorageContainer -Name $storageContainerName -Context $context
-
-# Carregue o VHD para o contêiner de armazenamento (se necessário)
-Set-AzStorageBlobContent -File "C:\caminho\para\seu\vhd.vhd" -Container $storageContainerName -Blob "meuvhd.vhd" -Context $context
-
-# Crie um disco gerenciado a partir do VHD
-$diskConfig = New-AzDiskConfig -AccountType "Standard_LRS" -Location $location -CreateOption "Import" -SourceUri $vhdUri
-$disk = New-AzDisk -ResourceGroupName $resourceGroupName -DiskName "MeuDisco" -Disk $diskConfig
-
-# Crie a configuração da VM
-$vmConfig = New-AzVMConfig -VMName $vmName -VMSize $vmSize | `
-    Set-AzVMOperatingSystem -Linux -ComputerName $vmName -Credential (New-Object System.Management.Automation.PSCredential($adminUsername, (ConvertTo-SecureString $adminPassword -AsPlainText -Force))) | `
-    Set-AzVMSourceImage -Id $disk.Id | `
-    Add-AzVMNetworkInterface -Id $nic.Id
-
-# Crie a VM
-New-AzVM -ResourceGroupName $resourceGroupName -Location $location -VM $vmConfig
-
-# Destrua o contêiner de blob (se desejar)
-Remove-AzStorageContainer -Name $storageContainerName -Context $context
